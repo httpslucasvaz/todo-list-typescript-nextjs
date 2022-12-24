@@ -17,15 +17,30 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import UndoIcon from '@mui/icons-material/Undo'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import { useState } from 'react'
+import { stringify } from 'querystring'
 
 export default function Home() {
-  // const [task, setTask] = useState()
+  const [task, setTask] = useState([])
+  const [input, setInput] = useState('')
+  console.log(task)
   const [value, setValue] = useState('1')
 
   const handleChange = (e: any, newValue: string) => {
     setValue(newValue)
   }
-
+  const handleAddTask = () => {
+    if (!task) {
+      alert('Por favor, insira uma tarefa!')
+    } else {
+      const obj = {
+        id: Date.now(),
+        description: input,
+        done: false,
+      }
+      setTask([...task, obj])
+      setInput('')
+    }
+  }
   return (
     <Box
       sx={{
@@ -50,10 +65,17 @@ export default function Home() {
             id="outlined-basic"
             label="digite sua tarefa"
             variant="filled"
-            color="warning"
+            color="secondary"
             focused
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
           />
-          <Button variant="contained" sx={{ ml: 1 }} color="warning">
+          <Button
+            variant="contained"
+            sx={{ ml: 1 }}
+            color="secondary"
+            onClick={handleAddTask}
+          >
             <AddCircleIcon />
           </Button>
         </Box>
@@ -63,66 +85,90 @@ export default function Home() {
 
         <TabContext value={value}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <TabList onChange={handleChange} aria-label="lab API tabs example">
-              <Tab label="Item One" value="1" />
-              <Tab label="Item Two" value="2" />
-              <Tab label="Item Three" value="3" />
+            <TabList
+              variant="scrollable"
+              scrollButtons="auto"
+              textColor="secondary"
+              indicatorColor="secondary"
+              sx={{
+                '.MuiTab-root': {
+                  fontWeight: 600,
+                  fontSize: '1.1rem',
+                },
+              }}
+              onChange={handleChange}
+            >
+              <Tab label="ATIVOS" value="1" />
+              <Tab label="FINALIZADOS" value="2" />
+              <Tab label="CANCELADOS" value="3" />
             </TabList>
           </Box>
-          <TabPanel value="1">Item One</TabPanel>
+          <TabPanel value="1">
+            {task?.map((task, index) => {
+              return (
+                <>
+                  <Box display="flex">
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        width: '100%',
+                        minHeight: '4rem',
+                        borderRadius: '10px',
+                        backgroundColor: '#cfcfcf',
+                        borderLeft: '10px solid red',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Box
+                        key={index}
+                        display="flex"
+                        sx={{
+                          width: '100%',
+                          p: 1,
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            fontSize: '1.1rem',
+                            color: '#40403F',
+                            fontWeight: '600',
+                            textTransform: 'uppercase',
+                          }}
+                        >
+                          {task.description}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      width: '100%',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <div>
+                      <Typography ml={2}>20:30 </Typography>
+                    </div>
+                    <div>
+                      <Button color="success">
+                        <CheckCircleIcon />
+                      </Button>
+                      <Button color="warning" disabled>
+                        <UndoIcon />
+                      </Button>
+                      <Button color="error">
+                        <DeleteForeverIcon />
+                      </Button>
+                    </div>
+                  </Box>
+                </>
+              )
+            })}
+          </TabPanel>
           <TabPanel value="2">Item Two</TabPanel>
           <TabPanel value="3">Item Three</TabPanel>
         </TabContext>
-
-        <Box display="flex" sx={{ mt: 4 }}>
-          <Box
-            sx={{
-              display: 'flex',
-              width: '100%',
-              minHeight: '4rem',
-              borderRadius: '10px',
-              backgroundColor: '#cfcfcf',
-              borderLeft: '10px solid red',
-              alignItems: 'center',
-            }}
-          >
-            <Box
-              display="flex"
-              sx={{
-                width: '100%',
-                p: 1,
-              }}
-            >
-              <Typography
-                sx={{
-                  fontSize: '1.1rem',
-                  color: '#40403F',
-                  fontWeight: '600',
-                  textTransform: 'uppercase',
-                }}
-              >
-                jogar bola
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            width: '100%',
-            justifyContent: 'flex-end',
-          }}
-        >
-          <Button color="success">
-            <CheckCircleIcon />
-          </Button>
-          <Button color="warning" disabled>
-            <UndoIcon />
-          </Button>
-          <Button color="error">
-            <DeleteForeverIcon />
-          </Button>
-        </Box>
       </Container>
     </Box>
   )
