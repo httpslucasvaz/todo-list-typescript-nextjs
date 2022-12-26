@@ -14,10 +14,14 @@ import TabPanel from '@mui/lab/TabPanel'
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import UndoIcon from '@mui/icons-material/Undo'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import { useState } from 'react'
-import { stringify } from 'querystring'
+
+interface ObjProps {
+  id: string
+  description: string
+  done: boolean
+}
 
 export default function Home() {
   const [task, setTask] = useState([])
@@ -32,7 +36,7 @@ export default function Home() {
     if (!task) {
       alert('Por favor, insira uma tarefa!')
     } else {
-      const obj = {
+      const obj: ObjProps = {
         id: Date.now(),
         description: input,
         done: false,
@@ -120,7 +124,6 @@ export default function Home() {
                       }}
                     >
                       <Box
-                        key={index}
                         display="flex"
                         sx={{
                           width: '100%',
@@ -128,11 +131,14 @@ export default function Home() {
                         }}
                       >
                         <Typography
+                          key={index}
                           sx={{
+                            width: '100%',
                             fontSize: '1.1rem',
                             color: '#40403F',
                             fontWeight: '600',
                             textTransform: 'uppercase',
+                            wordBreak: 'break-all',
                           }}
                         >
                           {task.description}
@@ -144,19 +150,14 @@ export default function Home() {
                     sx={{
                       display: 'flex',
                       width: '100%',
-                      justifyContent: 'space-between',
+                      justifyContent: 'flex-end',
                     }}
                   >
-                    <div>
-                      <Typography ml={2}>20:30 </Typography>
-                    </div>
                     <div>
                       <Button color="success">
                         <CheckCircleIcon />
                       </Button>
-                      <Button color="warning" disabled>
-                        <UndoIcon />
-                      </Button>
+
                       <Button color="error">
                         <DeleteForeverIcon />
                       </Button>
