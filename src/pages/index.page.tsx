@@ -18,23 +18,25 @@ import AddCircleIcon from '@mui/icons-material/AddCircle'
 import { useState } from 'react'
 
 interface ObjProps {
-  id: string
+  id: number
   description: string
   done: boolean
 }
 
 export default function Home() {
-  const [task, setTask] = useState([])
+  const [task, setTask] = useState<ObjProps[]>([])
+  const [taskDone, setTaskDone] = useState<ObjProps[]>([])
   const [input, setInput] = useState('')
-  console.log(task)
   const [value, setValue] = useState('1')
 
   const handleChange = (e: any, newValue: string) => {
     setValue(newValue)
   }
   const handleAddTask = () => {
-    if (!task) {
-      alert('Por favor, insira uma tarefa!')
+    if (!input || input.length <= 2) {
+      alert('Por favor, insira uma tarefa! Mínimo de 3 caracteres')
+    } else if (input.length >= 29) {
+      alert('Máximo de 30 caracteres!')
     } else {
       const obj: ObjProps = {
         id: Date.now(),
@@ -45,6 +47,21 @@ export default function Home() {
       setInput('')
     }
   }
+
+  const handleTaksDone = (tasks: ObjProps) => {
+    const currentTask = task.find((item) => {
+      return item.id === tasks.id
+    })
+
+    currentTask.done = !currentTask.done
+    setTask([...task])
+
+    const filterTaskDone = task.filter((item) => item.done === true)
+
+    setTaskDone([...taskDone, filterTaskDone])
+    console.log(taskDone)
+  }
+
   return (
     <Box
       sx={{
@@ -154,7 +171,10 @@ export default function Home() {
                     }}
                   >
                     <div>
-                      <Button color="success">
+                      <Button
+                        color="success"
+                        onClick={() => handleTaksDone(task)}
+                      >
                         <CheckCircleIcon />
                       </Button>
 
