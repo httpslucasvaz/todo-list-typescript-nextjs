@@ -21,7 +21,7 @@ import UndoIcon from '@mui/icons-material/Undo'
 import DoDisturbAltIcon from '@mui/icons-material/DoDisturbAlt'
 import GradingIcon from '@mui/icons-material/Grading'
 import AssignmentIcon from '@mui/icons-material/Assignment'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import dynamic from 'next/dynamic'
 
@@ -61,7 +61,7 @@ function Home() {
     localStorage.setItem('key', JSON.stringify(task))
   }, [task])
 
-  const handleChange = (e: any, newValue: string) => {
+  const handleChange = (event: any, newValue: string) => {
     setValue(newValue)
   }
   const handleAddTask = () => {
