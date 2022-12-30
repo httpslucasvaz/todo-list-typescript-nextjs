@@ -211,7 +211,7 @@ function Home() {
             </Button>
           </Box>
           <TabPanel value="1">
-            {task?.every((item) => item.taskValue !== '1') ? (
+            {[...task].every((item) => item.taskValue !== '1') ? (
               <Box>
                 <Box
                   sx={{
@@ -329,7 +329,7 @@ function Home() {
           {/* ///////// DONE */}
 
           <TabPanel value="2">
-            {task?.every((item) => item.taskValue !== '2') ? (
+            {[...task].every((item) => item.taskValue !== '2') ? (
               <Box>
                 <Box
                   sx={{
@@ -424,7 +424,7 @@ function Home() {
           {/* ///////// CANCEL */}
 
           <TabPanel value="3">
-            {task?.every((item) => item.taskValue !== '3') ? (
+            {[...task].every((item) => item.taskValue !== '3') ? (
               <Box>
                 <Box
                   sx={{
