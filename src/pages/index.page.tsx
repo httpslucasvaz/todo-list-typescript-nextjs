@@ -39,7 +39,6 @@ function Home() {
   })
   const [input, setInput] = useState('')
   const [value, setValue] = useState('1')
-  /// //////
   const [open, setOpen] = useState(false)
 
   const handleSnackClick = () => {
@@ -134,6 +133,7 @@ function Home() {
             sx={{
               color: '#40403F',
               fontWeight: 800,
+              cursor: 'default',
             }}
           >
             MY
@@ -144,6 +144,7 @@ function Home() {
               color: '#40403F',
               fontWeight: 800,
               mt: '-20px',
+              cursor: 'default',
             }}
           >
             {' '}
@@ -423,7 +424,7 @@ function Home() {
           {/* ///////// CANCEL */}
 
           <TabPanel value="3">
-            {task?.every((item) => item.taskValue !== '2') ? (
+            {task?.every((item) => item.taskValue !== '3') ? (
               <Box>
                 <Box
                   sx={{
